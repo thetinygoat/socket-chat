@@ -24,6 +24,4 @@ io.on('connection', (socket)=>{
     })
 });
 
-http.listen(8080,()=>{
-    console.log('server started on port 8080');
-})
+http.listen(process.env.PORT);
