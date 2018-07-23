@@ -1,0 +1,19 @@
+.writer{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.chatroom{
+    color: #fff;
+}
+.sidebar{
+    overflow: hidden;
+    height: 100vh;
+    max-height: 100vh;
+    width: 25vw;
+    position: fixed;
+}
+.message-writer{
+    margin-bottom: 5em;
+}

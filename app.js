@@ -2,26 +2,28 @@ const express = require('express')
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-
+const PORT = process.env.PORT || 8080;
+const IP = process.env.IP;
 // app.set('view engine', 'pug')
-
+app.use(express.static('public'));
 app.get('/', (req,res)=>{
     res.sendFile(__dirname+'/views/index.html')
 });
 
 io.on('connection', (socket)=>{
-    socket.on('chat message',(data)=>{
-        io.emit('chat message', data);
+
+    io.emit('new connection', 'new user connected!');
+    io.emit('active users', io.engine.clientsCount);
+
+    socket.on('new message', (data)=>{
+        io.emit('new message', data);
     });
     socket.on('disconnect', ()=>{
-        io.emit('disconnect', 'user disconnected!');
+        io.emit('disconnect', 'a user left!');
     });
-    socket.on('typing', (data)=>{
-        io.emit('typing', data);
-    });
-    socket.on('notyping', (data) => {
-        io.emit('notyping', data);
-    })
+
 });
 
-http.listen(process.env.PORT);
+http.listen(PORT,IP,()=>{
+    console.log('server started...');
+});
